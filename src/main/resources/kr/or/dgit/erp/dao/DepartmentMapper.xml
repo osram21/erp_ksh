@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.erp.dao.DepartmentMapper">
+	<resultMap type="Department" id="DeptResult">
+		<result property="Dcode" column="dcode"/>
+		<result property="Dname" column="dname"/>
+		<result property="Floor" column="floor"/>
+	</resultMap>
+	
+	<sql id="selectSql">
+		select dcode, dname, floor from department
+	</sql>
+	
+	<sql id="insertSql">
+		insert into department (dcode,dname,floor) values
+		(#{Dcode},#{Dname},#{Floor})
+	</sql>
+	
+	<sql id="updateSql">
+		update department
+		<set>
+			<if test="Dcode != null">dcode=#{Dcode},</if>
+			dname=#{Dname},
+			floor=#{Floor}
+		</set>
+	</sql>
+	
+	<sql id="whereSql">
+		where dcode=#{Dcode}
+	</sql>
+	
+	 <insert id="insertDept" parameterType="Department">
+		<include refid="insertSql"/>
+	</insert>
+	
+	<select id="selectDept" resultType="Department">
+		<include refid="selectSql"/>
+	</select>
+	
+	<select id="selectOneDept" parameterType="hashmap" resultMap="DeptResult">
+		<include refid="selectSql"/>
+		<include refid="whereSql"/>
+	</select>
+	
+	<update id="updateDept" parameterType="Department">
+		<include refid="updateSql"/>
+	</update>   
+</mapper>

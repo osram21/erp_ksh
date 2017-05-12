@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.dgit.erp.dao.EmployeeMapper">
+	<resultMap type="Employee" id="EmpResult">
+		<result property="Eno" column="eno"/>
+		<result property="Ename" column="ename"/>
+		<result property="Salary" column="salary"/>
+		<result property="gender" column="gender"/>
+		<result property="JoinDate" column="joindate"/>
+		<association property="department"
+			resultMap = "kr.or.dgit.erp.dao.DepartmentMapper.DeptResult"/>
+		<association property="title" 
+		resultMap="kr.or.dgit.erp.dao.TitleMapper.TitleResult"/>
+	</resultMap>
+	
+	<sql id="insertSql">
+		INSERT INTO employee
+		(eno, ename, salary, dno, gender, joinDate, title)
+		VALUES(#{Eno}, #{Ename}, #{Salary}, #{department.dname}, #{gender}, #{JoinDate}, #{title.tname})
+	</sql>
+	
+	<sql id="selectSql">
+		SELECT eno, ename, salary, dno, gender, joinDate, title, t.tcode, t.tname , d.dcode,d.dname,d.floor 
+		FROM employee e join title t on e.title=t.tcode join department d on e.dno=d.dcode             
+	</sql>
+	
+	<sql id="whereSql">
+		<where>
+			<if test="Eno != null">
+				e.eno= #{Eno}
+			</if>
+			<if test="Ename != null">
+				and e.ename= #{Ename}
+			</if>
+		</where>
+	</sql>
+	
+	<insert id="insertEmp" parameterType="Employee">
+		<include refid="insertSql"/>
+	</insert>
+	
+	<select id="selectEmp" resultMap="EmpResult">
+		<include refid="selectSql"/>
+		order by eno 
+	</select>
+	
+	<select id="selectEmpOne">
+		<include refid="selectSql"/>
+		<include refid="whereSql"/>
+	</select>
+	<!-- 업데이트 나중에 -->
+</mapper>

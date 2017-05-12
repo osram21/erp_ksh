@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Title: ERP_Application
+Version: 1.0
+Main-Class: kr.or.dgit.erp_main.ERP_Application
+
