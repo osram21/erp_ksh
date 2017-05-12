@@ -42,6 +42,11 @@
 		<include refid="whereSql"/>
 	</select>
 	
+	<select id="selectDeptbyName" parameterType="Department" resultMap="DeptResult">
+		<include refid="selectSql"/>
+		where dname=#{Dname}
+	</select>
+	
 	<update id="updateDept" parameterType="Department">
 		<include refid="updateSql"/>
 	</update>   
