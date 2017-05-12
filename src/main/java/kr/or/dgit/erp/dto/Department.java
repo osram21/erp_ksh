@@ -49,8 +49,4 @@ public class Department {
 	public Object[] toArray() {
 		return new Object[]{String.format("D%03d",Dcode),Dname,Floor};
 	}
-	
-	
-	
-	
 }
