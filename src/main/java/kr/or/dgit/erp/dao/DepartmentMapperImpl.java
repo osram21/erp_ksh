@@ -40,5 +40,15 @@ public class DepartmentMapperImpl implements DepartmentMapper {
 		log.debug("selectOneDept");
 		return sqlSession.selectOne(namespace+"selectOneDept",param);
 	}
+	@Override
+	public int deleteDept(Department department) {
+		log.debug("deleteDept");
+		return sqlSession.delete(namespace+"deleteDept",department);
+	}
+	@Override
+	public Department selectDeptbyName(Department department) {
+		log.debug("selectDeptbyName");
+		return sqlSession.selectOne(namespace+"selectDeptbyName",department);
+	}
 
 }

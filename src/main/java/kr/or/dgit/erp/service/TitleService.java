@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.dgit.erp.dao.DepartmentMapper;
+import kr.or.dgit.erp.dao.DepartmentMapperImpl;
 import kr.or.dgit.erp.dao.TitleMapper;
 import kr.or.dgit.erp.dao.TitleMapperImpl;
 import kr.or.dgit.erp.dto.Title;
@@ -44,10 +46,26 @@ public class TitleService {
 		}
 	}
 	
-	public Title selectOne(Map<String, Object> param){
+	public Title selectByOne(Map<String,Object>param){
 		try (SqlSession sqlSession = MybatisSqlSessionFactory.openSession()) {
 			TitleMapper titleMapper = new TitleMapperImpl(sqlSession);
-			return titleMapper.selectOne(param);
+			return titleMapper.selectByOne(param);
+		}
+	}
+	
+	public int deleteTitle(Title title){
+		try (SqlSession sqlSession = MybatisSqlSessionFactory.openSession()) {
+			TitleMapper titleMapper = new TitleMapperImpl(sqlSession);
+			int res = titleMapper.deleteTitle(title);
+			sqlSession.commit();
+			return res;
+		}
+	}
+	
+	public Title selectTitlebyName(Title title){
+		try(SqlSession sqlSession = MybatisSqlSessionFactory.openSession()){
+			TitleMapper titleMapper = new TitleMapperImpl(sqlSession);
+			return titleMapper.selectTitlebyName(title);
 		}
 	}
 }

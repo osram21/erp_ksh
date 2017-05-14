@@ -72,12 +72,16 @@ public class erp_empView extends JPanel {
 		List<Employee> list = EmployeeService.getInstance().selectEmp();
 		String value;
 		if(list.size()==0){
-			value = String.format("E%06d", list.get(list.size()-1).getEno()+1);
+			value = String.format("E%06d", 17001);
 		}else{
 			value = String.format("E%06d",list.get(list.size()-1).getEno()+1 );
 		}
 		pContent.getpNo().setTfValue(value);
 		pContent.getpNo().gettF().setEditable(false);
 		pContent.getpName().gettF().requestFocus();
+	}
+
+	public erp_Employee getpContent() {
+		return pContent;
 	}
 }

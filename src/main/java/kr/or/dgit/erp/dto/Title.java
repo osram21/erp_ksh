@@ -11,6 +11,10 @@ public class Title {
 	}
 	
 
+	public Title(String tname) {
+		Tname = tname;
+	}
+
 	public Title(int tcode, String tname) {
 		Tcode = tcode;
 		Tname = tname;

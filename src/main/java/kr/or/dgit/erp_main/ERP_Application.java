@@ -66,6 +66,7 @@ public class ERP_Application extends JFrame {
 
 	protected void actionPerformedBtnEmployee(ActionEvent arg0) {
 		erp_empView empview = new erp_empView();
+		empview.getpContent().setCombodate();
 		empview.loadDate();
 		empview.init();
 		JFrame jf = new JFrame();

@@ -8,7 +8,8 @@ import kr.or.dgit.erp.dto.Title;
 public interface TitleMapper {
 	int insertTitle(Title title);
 	int updateTitle(Title title);
-	
+	int deleteTitle(Title title);
+	Title selectTitlebyName(Title title);
 	List<Title> selectTitle();
-	Title selectOne(Map<String, Object> param);
+	Title selectByOne(Map<String, Object>param);
 }

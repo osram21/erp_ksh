@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="erp_ksh.SqlSessionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-05-11T00:50:45" hostname="DESKTOP-6QUKVG8" time="0.011">
+<testsuite name="erp_ksh.SqlSessionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2017-05-13T07:33:58" hostname="COM-20130523VMO" time="0.01">
   <properties/>
-  <testcase name="testSql" classname="erp_ksh.SqlSessionTest" time="0.011"/>
+  <testcase name="testSql" classname="erp_ksh.SqlSessionTest" time="0.01"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

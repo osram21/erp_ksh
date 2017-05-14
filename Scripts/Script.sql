@@ -70,3 +70,6 @@ select dcode, dname, floor from department;
 
 SELECT eno, ename, salary, dno, gender, joinDate, title, t.tcode, t.tname , d.dcode,d.dname,d.floor 
 FROM employee e join title t on e.title=t.tcode join department d on e.dno=d.dcode;
+
+insert into title values
+(6,"dd");

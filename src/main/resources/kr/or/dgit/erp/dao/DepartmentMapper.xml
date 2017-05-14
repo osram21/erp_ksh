@@ -20,13 +20,16 @@
 		update department
 		<set>
 			<if test="Dcode != null">dcode=#{Dcode},</if>
-			dname=#{Dname},
-			floor=#{Floor}
+			<if test="Dname != null">dname=#{Dname},</if>
+			<if test="Floor != null">floor=#{Floor}</if>
 		</set>
+		where dcode=#{Dcode}
 	</sql>
 	
 	<sql id="whereSql">
-		where dcode=#{Dcode}
+		<if test="Dcode != null">
+			dcode = #{Dcode}
+		</if>
 	</sql>
 	
 	 <insert id="insertDept" parameterType="Department">
@@ -49,5 +52,9 @@
 	
 	<update id="updateDept" parameterType="Department">
 		<include refid="updateSql"/>
-	</update>   
+	</update> 
+	
+	<delete id="deleteDept" parameterType="Department">
+		delete from department where dcode=#{Dcode}
+	</delete>
 </mapper>

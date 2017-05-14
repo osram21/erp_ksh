@@ -19,8 +19,9 @@
 		update title
 		<set>
 			<if test="Tcode !=null">tcode=#{Tcode},</if>
-			tname=#{Tname}
+			<if test="Tname !=null">tname=#{Tname}</if>
 		</set>
+		where tcode=#{Tcode}
 	</sql>
 	
 	<sql id="whereSql">
@@ -42,14 +43,21 @@
 		<include refid="selectSql"/>
 	</select>
 	
-	<select id="selectOne" parameterType="hashmap" resultMap="TitleResult">
+	<select id="selectByOne" parameterType="hashmap" resultMap="TitleResult">
 		<include refid="selectSql"/>
 		<include refid="whereSql"/>
 	</select>
 	
 	<update id="updateTitle" parameterType="Title">
 		<include refid="updateSql"/>
-		where tname = #{Tname}
 	</update>
 	
+	<select id="selectTitlebyName" parameterType="Title" resultMap="TitleResult">
+		<include refid="selectSql"/>
+		where tname=#{Tname}
+	</select>
+	
+	<delete id="deleteTitle" parameterType="Title">
+		delete from title where tcode=#{Tcode}
+	</delete>
 </mapper>
