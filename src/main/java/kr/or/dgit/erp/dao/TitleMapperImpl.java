@@ -37,9 +37,21 @@ public class TitleMapperImpl implements TitleMapper {
 	}
 
 	@Override
-	public Title selectOne(Map<String, Object> param) {
-		log.debug("selectOne");
-		return sqlSession.selectOne(namespace+"selectOne",param);
+	public Title selectByOne(Map<String,Object>param) {
+		log.debug("selectByOne");
+		return sqlSession.selectOne(namespace+"selectByOne",param);
+	}
+
+	@Override
+	public int deleteTitle(Title title) {
+		log.debug("deleteTitle");		
+		return sqlSession.delete(namespace+"deleteTitle",title);
+	}
+
+	@Override
+	public Title selectTitlebyName(Title title) {
+		log.debug("selectTitlebyName");
+		return sqlSession.selectOne(namespace+"selectTitlebyName",title);
 	}
 
 }

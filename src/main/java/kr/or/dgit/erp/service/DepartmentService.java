@@ -53,4 +53,20 @@ public class DepartmentService {
 			return departmentMapper.selectOneDept(param);
 		}
 	}
+	
+	public Department selectDeptbyName(Department department){
+		try(SqlSession sqlSession = MybatisSqlSessionFactory.openSession()){
+			DepartmentMapper departmentMapper = new DepartmentMapperImpl(sqlSession);
+			return departmentMapper.selectDeptbyName(department);
+		}
+	}
+	
+	public int deleteDept(Department department){
+		try(SqlSession sqlSession = MybatisSqlSessionFactory.openSession()){
+			DepartmentMapper departmentMapper = new DepartmentMapperImpl(sqlSession);
+			int res = departmentMapper.deleteDept(department);
+			sqlSession.commit();
+			return res;
+		}
+	}
 }

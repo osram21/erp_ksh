@@ -6,38 +6,30 @@ import java.util.List;
 import java.util.Vector;
 
 public class ComboPanel<T> extends CompPanel {
-	private JComboBox<T> comboBox;
+	
+	private JComboBox<T> tf;
 	
 	public ComboPanel() {
 		pValue.setLayout(new GridLayout(1, 0, 0, 0));
-		comboBox = new JComboBox<>();
-		pValue.add(comboBox);
+		tf = new JComboBox<>();
+		pValue.add(tf);
+		
 	}
-	public void setComboDate(List<T> items) {
-		for (T t : items) {
-			comboBox.addItem(t);
+	public void setComboData(List<T> items){
+		for(T t :items){
+			tf.addItem(t);
 		}
 	}
-	
-	public JComboBox<T> getComboBox() {
-		return comboBox;
+	public Object getSelectItem(){
+		return tf.getSelectedItem();
 	}
-
-	public T getCombItem() {
-		return (T) comboBox.getSelectedItem();
+	public void setSelectedItem(T item){
+		tf.setSelectedItem(item);
 	}
-
-	public void setComboBox(T item) {
-		comboBox.addItem(item);
-		comboBox.setSelectedIndex(0);
+	public void setSelectedItem(int idx){
+		tf.setSelectedIndex(idx);
 	}
-
-	public void setSelected(int i) {
-		comboBox.setSelectedIndex(i);
+	public JComboBox<T> getCombobox(){
+		return tf;
 	}
-
-	public void setSelectedTT(T item) {
-		comboBox.setSelectedItem(item);
-	}
-	
 }

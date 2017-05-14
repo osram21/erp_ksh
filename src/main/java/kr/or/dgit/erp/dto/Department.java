@@ -10,6 +10,10 @@ public class Department {
 	public Department(int dcode) {
 		Dcode = dcode;
 	}
+	
+	public Department(String dname) {
+		Dname = dname;
+	}
 
 	public Department(int dcode, String dname, int floor) {
 		Dcode = dcode;

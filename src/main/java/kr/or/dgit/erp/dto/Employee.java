@@ -1,13 +1,17 @@
 package kr.or.dgit.erp.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Employee {
 	private int Eno;
 	private String Ename;
 	private int Salary;
 	private Department department;
 	private Boolean gender;
-	private String JoinDate;
+	private Date JoinDate;
 	private Title title;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public Employee() {}
 
@@ -15,7 +19,7 @@ public class Employee {
 		Eno = eno;
 	}
 
-	public Employee(int eno, String ename, int salary, Department department, Boolean gender, String joinDate,
+	public Employee(int eno, String ename, int salary, Department department, Boolean gender, Date joinDate,
 			Title title) {
 		Eno = eno;
 		Ename = ename;
@@ -66,11 +70,11 @@ public class Employee {
 		this.gender = gender;
 	}
 
-	public String getJoinDate() {
+	public Date getJoinDate() {
 		return JoinDate;
 	}
 
-	public void setJoinDate(String joinDate) {
+	public void setJoinDate(Date joinDate) {
 		JoinDate = joinDate;
 	}
 
@@ -90,7 +94,8 @@ public class Employee {
 
 	public Object[] toArray() {
 		return new Object[]{String.format("E%06d", Eno),Ename,String.format("%s", title.getTname()),Salary,gender?"남자":"여자",
-				String.format("%s(%d층)", department.getDname(),department.getFloor()),JoinDate};
+				String.format("%s(%d층)", department.getDname(),department.getFloor()),sdf.format(JoinDate)};
+	
 	}
 	
 	

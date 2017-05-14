@@ -1,9 +1,10 @@
 package kr.or.dgit.erp_Content;
 
 import java.awt.GridLayout;
-import java.util.HashMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -15,18 +16,21 @@ import kr.or.dgit.erp.service.TitleService;
 import kr.or.dgit.erp_panel.ComboPanel;
 import kr.or.dgit.erp_panel.RadioPanel;
 import kr.or.dgit.erp_panel.SpinnerPanel;
+import kr.or.dgit.erp_panel.TextFieldFormatPanel;
 import kr.or.dgit.erp_panel.TextFiledPanel;
 
 public class erp_Employee extends JPanel {
-
 	private TextFiledPanel pNo;
 	private TextFiledPanel pName;
-	private ComboPanel<Title> pTitle;
+	private ComboPanel<String> pTitle;
 	private SpinnerPanel pSalary;
 	private RadioPanel pSex;
-	private ComboPanel<Department> pDepartment;
-	private TextFiledPanel pJoindate;
-
+	private ComboPanel<String> pDepartment;
+	private TextFieldFormatPanel pJoindate;
+	private List<Title> Tlist;
+	private List<Department>Dlist;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	public erp_Employee() {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -38,10 +42,7 @@ public class erp_Employee extends JPanel {
 		pName.setTitle("사원명");
 		add(pName);
 		
-		pTitle = new ComboPanel();
-		TitleService ts = new TitleService();
-		List<Title> tslist = ts.selectTitle();
-		pTitle.setComboDate(tslist);
+		pTitle = new ComboPanel<>();
 		pTitle.setTitle("직책");
 		add(pTitle);
 		
@@ -55,15 +56,14 @@ public class erp_Employee extends JPanel {
 		pSex.setRadioItems("남","여");
 		add(pSex);
 		
-		pDepartment = new ComboPanel();
-		DepartmentService dts = new DepartmentService();
-		List<Department> list = dts.selectDept();
-		pDepartment.setComboDate(list);
+		pDepartment = new ComboPanel<>();
 		pDepartment.setTitle("부서");
 		add(pDepartment);
 		
-		pJoindate = new TextFiledPanel();
+		pJoindate = new TextFieldFormatPanel();
 		pJoindate.setTitle("입사일");
+		pJoindate.setMaskPattern("####-##-##", '#');
+		pJoindate.setTfValue(Day());
 		add(pJoindate);
 	}
 	
@@ -71,18 +71,18 @@ public class erp_Employee extends JPanel {
 		int eno = Integer.parseInt(pNo.getTfValue().substring(1));
 		String ename = pName.getTfValue();
 		int salary = (int)pSalary.getValue();
-		
-		Department department = pDepartment.getCombItem();
-		System.out.println(pDepartment.getCombItem());
+		String[] dept = (String[])pDepartment.getSelectItem().toString().trim().split("\\(");
+		Department department = DepartmentService.getInstance().selectDeptbyName(new Department(dept[0]));
 		Boolean gender = pSex.getSelectedItem().equals("남")?true:false;
-		String joinDate = pJoindate.getTfValue();
-		
-		/*System.out.println("title:"+title);
-		Map<String, Object> param = new HashMap<>();
-		param.put("Tcode", title.getTname());
-		System.out.println("param:"+param);*/
-		/*Title title = TitleService.getInstance().selectOne(param);*/
-		Title title = pTitle.getCombItem();
+		Date joinDate = null;
+		try{
+			if(pJoindate.getTfValue()!=null){
+				joinDate = sdf.parse(pJoindate.getTfValue());
+			}
+		}catch(ParseException e){
+			e.printStackTrace();
+		}
+		Title title = TitleService.getInstance().selectTitlebyName(new Title((String)pTitle.getSelectItem()));
 		return new Employee(eno, ename, salary, department, gender, joinDate, title);
 	}
 	
@@ -90,19 +90,36 @@ public class erp_Employee extends JPanel {
 		pNo.setTfValue(employee.getEno()+"");
 		pName.setTfValue(employee.getEname());
 		pSalary.setValue(employee.getSalary());
-		pDepartment.setSelected(employee.getDepartment().getDcode());
+		pDepartment.setSelectedItem(employee.getDepartment().getDcode());
 		pSex.setSelectedItem(employee.getGender()?"남":"여");
-		pJoindate.setTfValue(employee.getJoinDate());
-		pTitle.setSelected(employee.getTitle().getTcode());
+		String s = sdf.format(employee.getJoinDate());
+		pJoindate.setTfValue(s);
+		pTitle.setSelectedItem(employee.getTitle().getTcode());
 	}
 	
 	public void clear(){
 		pName.setTfValue("");
 		pSalary.setValue(1500000);
-		pDepartment.setSelected(0);
+		pDepartment.setSelectedItem(0);
 		pSex.setSelectedItem(0);
-		pJoindate.setTfValue("");
-		pTitle.setSelected(0);
+		pJoindate.setTfValue(Day());
+		pTitle.setSelectedItem(0);
+	}
+	
+	public void setCombodate(){
+		Tlist = TitleService.getInstance().selectTitle();
+		Dlist = DepartmentService.getInstance().selectDept();
+		for(Title t : Tlist){
+			pTitle.getCombobox().addItem(t.toString());
+		}
+		for(Department D : Dlist){
+			pDepartment.getCombobox().addItem(D.toString());
+		}
+	}
+	
+	private String Day(){
+		String s = sdf.format(new Date());
+		return s;
 	}
 
 	public TextFiledPanel getpNo() {
@@ -129,9 +146,7 @@ public class erp_Employee extends JPanel {
 		return pDepartment;
 	}
 
-	public TextFiledPanel getpJoindate() {
+	public TextFieldFormatPanel getpJoindate() {
 		return pJoindate;
 	}
-	
-	
 }

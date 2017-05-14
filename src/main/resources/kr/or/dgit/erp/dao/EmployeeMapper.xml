@@ -16,7 +16,7 @@
 	<sql id="insertSql">
 		INSERT INTO employee
 		(eno, ename, salary, dno, gender, joinDate, title)
-		VALUES(#{Eno}, #{Ename}, #{Salary}, #{department.dname}, #{gender}, #{JoinDate}, #{title.tname})
+		VALUES(#{Eno}, #{Ename}, #{Salary}, #{department.Dcode}, #{gender}, #{JoinDate}, #{title.Tcode})
 	</sql>
 	
 	<sql id="selectSql">
