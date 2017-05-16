@@ -1,0 +1,32 @@
+$DEBUG [Test worker] - selectEmpOne
+�DEBUG [Test worker] - ==>  Preparing: SELECT eno, ename, salary, dno, gender, joinDate, title, t.tcode, t.tname , d.dcode,d.dname,d.floor FROM employee e join title t on e.title=t.tcode join department d on e.dno=d.dcode WHERE e.eno= ? 
+6DEBUG [Test worker] - ==> Parameters: 17012(Integer)
+{TRACE [Test worker] - <==    Columns: eno, ename, salary, dno, gender, joinDate, title, tcode, tname, dcode, dname, floor
+hTRACE [Test worker] - <==        Row: 17012, aa, 1500000, 2, 1, 2017-05-16, 2, 2, 부장, 2, 개발, 9
+)DEBUG [Test worker] - <==      Total: 1
+!DEBUG [Test worker] - selectEmp
+�DEBUG [Test worker] - ==>  Preparing: SELECT eno, ename, salary, dno, gender, joinDate, title, t.tcode, t.tname , d.dcode,d.dname,d.floor FROM employee e join title t on e.title=t.tcode join department d on e.dno=d.dcode order by eno 
+(DEBUG [Test worker] - ==> Parameters: 
+{TRACE [Test worker] - <==    Columns: eno, ename, salary, dno, gender, joinDate, title, tcode, tname, dcode, dname, floor
+kTRACE [Test worker] - <==        Row: 7691, 호호, 2555000, 4, 0, 2017-05-16, 4, 4, 대리, 4, 총무, 7
+oTRACE [Test worker] - <==        Row: 17001, 나사장, 5000000, 5, 1, 2017-03-01, 1, 1, 사장, 5, 경영, 4
+sTRACE [Test worker] - <==        Row: 17002, 나부장, 4000000, 1, 1, 2017-03-01, 2, 2, 부장, 1, 마케팅, 10
+oTRACE [Test worker] - <==        Row: 17003, 너부장, 4000000, 2, 0, 2017-03-01, 2, 2, 부장, 2, 개발, 9
+sTRACE [Test worker] - <==        Row: 17004, 나과장, 3500000, 1, 1, 2017-03-01, 3, 3, 과장, 1, 마케팅, 10
+oTRACE [Test worker] - <==        Row: 17005, 너과장, 3500000, 2, 0, 2017-03-01, 3, 3, 과장, 2, 개발, 9
+sTRACE [Test worker] - <==        Row: 17006, 나대리, 3000000, 1, 1, 2017-03-01, 4, 4, 대리, 1, 마케팅, 10
+oTRACE [Test worker] - <==        Row: 17007, 너대리, 3000000, 2, 0, 2017-03-01, 4, 4, 대리, 2, 개발, 9
+sTRACE [Test worker] - <==        Row: 17008, 나사원, 2500000, 1, 1, 2017-03-01, 5, 5, 사원, 1, 마케팅, 10
+sTRACE [Test worker] - <==        Row: 17009, 그사원, 2000000, 1, 0, 2017-03-01, 5, 5, 사원, 1, 마케팅, 10
+oTRACE [Test worker] - <==        Row: 17010, 너사원, 2500000, 2, 1, 2017-03-01, 5, 5, 사원, 2, 개발, 9
+oTRACE [Test worker] - <==        Row: 17011, 이사원, 2000000, 3, 0, 2017-03-01, 5, 5, 사원, 3, 인사, 6
+hTRACE [Test worker] - <==        Row: 17012, aa, 1500000, 2, 1, 2017-05-16, 2, 2, 부장, 2, 개발, 9
+*DEBUG [Test worker] - <==      Total: 13
+!DEBUG [Test worker] - updateEmp
+�DEBUG [Test worker] - ==>  Preparing: update employee SET ename= ?, salary =?, dno = ?, gender = ?, joinDate = ?, title = ? where eno = ? 
+�DEBUG [Test worker] - ==> Parameters: 호호(String), 2555000(Integer), 4(Integer), false(Boolean), 2017-05-16 19:53:16.304(Timestamp), 4(Integer), 7691(Integer)
+)DEBUG [Test worker] - <==    Updates: 1
+!DEBUG [Test worker] - deleteEmp
+KDEBUG [Test worker] - ==>  Preparing: delete from employee where eno = ? 
+6DEBUG [Test worker] - ==> Parameters: 17012(Integer)
+)DEBUG [Test worker] - <==    Updates: 1

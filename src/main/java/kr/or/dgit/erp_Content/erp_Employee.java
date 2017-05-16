@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import kr.or.dgit.erp.dto.Department;
@@ -87,7 +88,7 @@ public class erp_Employee extends JPanel {
 	}
 	
 	public void setObject(Employee employee){
-		pNo.setTfValue(employee.getEno()+"");
+		pNo.setTfValue(String.format("E%06d", employee.getEno()));
 		pName.setTfValue(employee.getEname());
 		pSalary.setValue(employee.getSalary());
 		pDepartment.setSelectedItem(employee.getDepartment().getDcode());
@@ -115,6 +116,16 @@ public class erp_Employee extends JPanel {
 		for(Department D : Dlist){
 			pDepartment.getCombobox().addItem(D.toString());
 		}
+	}
+	
+	public boolean checkItem(){
+		if(pName.getTfValue().equals("")){
+			JOptionPane.showMessageDialog(null, "빈칸이 존재합니다");
+			return false;
+		}else{
+			return true;
+		}
+		
 	}
 	
 	private String Day(){

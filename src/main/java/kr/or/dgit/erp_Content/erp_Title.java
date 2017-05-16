@@ -2,6 +2,7 @@ package kr.or.dgit.erp_Content;
 
 import java.awt.GridLayout;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import kr.or.dgit.erp.dto.Title;
@@ -32,7 +33,7 @@ public class erp_Title extends JPanel {
 	}
 	
 	public void setObject(Title title){
-		pNo.setTfValue(title.getTcode()+"");
+		pNo.setTfValue(String.format("T%03d", title.getTcode()));
 		pName.setTfValue(title.getTname());
 	}
 	
@@ -41,6 +42,15 @@ public class erp_Title extends JPanel {
 		pName.gettF().requestFocus();
 	}
 
+	public boolean cheeckItem(){
+		if(pName.getTfValue().equals("")){
+			JOptionPane.showMessageDialog(null, "빈칸이 존재합니다");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	
 	public TextFiledPanel getpNo() {
 		return pNo;
 	}

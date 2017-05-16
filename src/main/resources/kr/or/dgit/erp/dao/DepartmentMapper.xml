@@ -27,15 +27,25 @@
 	</sql>
 	
 	<sql id="whereSql">
+		<where>
 		<if test="Dcode != null">
 			dcode = #{Dcode}
 		</if>
+		 <if test="Dname != null">
+			and dname = #{Dname}
+		</if>
+		<if test="Floor != null">
+			and floor = #{Floor}
+		</if> 
+		</where>
 	</sql>
 	
+		<!-- insert -->
 	 <insert id="insertDept" parameterType="Department">
 		<include refid="insertSql"/>
 	</insert>
-	
+		
+		<!-- selectAll -->
 	<select id="selectDept" resultType="Department">
 		<include refid="selectSql"/>
 	</select>
@@ -45,15 +55,18 @@
 		<include refid="whereSql"/>
 	</select>
 	
+	 	<!-- name -->
 	<select id="selectDeptbyName" parameterType="Department" resultMap="DeptResult">
 		<include refid="selectSql"/>
 		where dname=#{Dname}
 	</select>
-	
+		
+		<!-- update -->
 	<update id="updateDept" parameterType="Department">
 		<include refid="updateSql"/>
 	</update> 
 	
+		<!-- delete -->
 	<delete id="deleteDept" parameterType="Department">
 		delete from department where dcode=#{Dcode}
 	</delete>

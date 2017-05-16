@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -108,7 +109,7 @@ public class erp_titleView extends JPanel {
 						init();
 						JOptionPane.showMessageDialog(null, "삭제되었습니다");
 					}catch(PersistenceException exception){
-						JOptionPane.showMessageDialog(null, "데이터사용중");
+						JOptionPane.showMessageDialog(null, "데이터사용중 뺄수 없슴");
 					}
 				}
 			}
@@ -122,12 +123,21 @@ public class erp_titleView extends JPanel {
 	
 	//버튼 추가염~
 	protected void actionPerformedBtnSave(ActionEvent e) {
-		Title title = pContent.getObject();
-		TitleService.getInstance().insertTitle(title);
-		JOptionPane.showMessageDialog(null, "추가되었습니다");
-		pContent.clear();
-		pTable.loadDate();
-		init();
+		if(pContent.cheeckItem()){
+			if(e.getActionCommand().equals("추가")){
+				Title title = pContent.getObject();
+				TitleService.getInstance().insertTitle(title);
+				JOptionPane.showMessageDialog(null, "추가되었습니다");
+			}else{
+				Title title = pContent.getObject();
+				TitleService.getInstance().updateTitle(title);
+				JOptionPane.showMessageDialog(null, "수정되었습니다");
+				btnSave.setText("추가");
+			}
+			pContent.clear();
+			pTable.loadDate();
+			init();
+		}
 	}
 	//취소~
 	protected void actionPerformedBtnCancel(ActionEvent e) {
@@ -135,7 +145,8 @@ public class erp_titleView extends JPanel {
 	}
 	
 	public void init(){
-		String value = String.format("T%03d", TitleService.getInstance().selectTitle().size()+1);
+		List<Title> ti=  TitleService.getInstance().selectTitle();
+		String value = String.format("T%03d",ti.get(ti.size()-1).getTcode()+1);
 		pContent.getpNo().setTfValue(value);
 		pContent.getpNo().gettF().setEditable(false);
 		pContent.getpName().gettF().requestFocus();

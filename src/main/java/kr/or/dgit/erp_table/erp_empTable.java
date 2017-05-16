@@ -1,7 +1,9 @@
 package kr.or.dgit.erp_table;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -55,4 +57,18 @@ public class erp_empTable extends JPanel {
 		}
 		return datas;
 	}
+	
+	public Employee getSelectObject(){
+		int selectedidx = table.getSelectedRow();
+		if(selectedidx == -1) return null;
+		String Eno = (String) table.getValueAt(selectedidx, 0).toString().substring(1);
+		Map<String, Object> param = new HashMap<>();
+		param.put("Eno", Eno);
+		return EmployeeService.getInstance().selectEmpOne(param);
+	}
+	public JTable getTable() {
+		return table;
+	}
+	
+	
 }

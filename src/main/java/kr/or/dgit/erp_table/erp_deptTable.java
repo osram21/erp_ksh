@@ -1,7 +1,9 @@
 package kr.or.dgit.erp_table;
 
 import java.awt.BorderLayout;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,7 +15,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 import kr.or.dgit.erp.dto.Department;
+import kr.or.dgit.erp.dto.Title;
 import kr.or.dgit.erp.service.DepartmentService;
+import kr.or.dgit.erp.service.TitleService;
 
 public class erp_deptTable extends JPanel {
 	private JTable table;
@@ -57,4 +61,23 @@ public class erp_deptTable extends JPanel {
 		}
 		return datas;
 	}
+	
+	public Department getSelectObject(){
+		int selectedidx = table.getSelectedRow();
+		if(selectedidx == -1)return null;
+		String Dcode = (String) table.getValueAt(selectedidx, 0).toString().substring(1);
+		//수정할때 1로됨 바꿔야됨
+		String Dname =(String)table.getValueAt(selectedidx, 1);
+		int floor = (int)table.getValueAt(selectedidx, 2);
+		Map<String, Object> param = new HashMap<>();
+		param.put("Dcode", Dcode);
+		param.put("Dname", Dname);
+		param.put("Floor", floor);
+		return DepartmentService.getInstance().selectOneDept(param);
+	}
+
+	public JTable getTable() {
+		return table;
+	}
+	
 }

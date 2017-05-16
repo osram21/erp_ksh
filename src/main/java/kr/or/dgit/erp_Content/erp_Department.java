@@ -2,6 +2,7 @@ package kr.or.dgit.erp_Content;
 
 import java.awt.GridLayout;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import kr.or.dgit.erp.dto.Department;
@@ -36,7 +37,7 @@ public class erp_Department extends JPanel {
 	}
 	
 	public void setObject(Department department){
-		pNo.setTfValue( department.getDcode()+"");
+		pNo.setTfValue(String.format("D%03d", department.getDcode()));
 		pName.setTfValue(department.getDname());
 		pFloor.setTfValue(department.getFloor()+"");
 	}
@@ -47,6 +48,14 @@ public class erp_Department extends JPanel {
 		pName.gettF().requestFocus();
 	}
 
+	public boolean checkItem(){
+		if(pName.getTfValue().equals("") || pFloor.getTfValue().equals("")){
+			JOptionPane.showMessageDialog(null, "빈칸이 존재합니다");
+			return false;
+		}else{
+			return true;
+		}
+	}
 	public TextFiledPanel getpNo() {
 		return pNo;
 	}

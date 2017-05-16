@@ -32,7 +32,35 @@
 			<if test="Ename != null">
 				and e.ename= #{Ename}
 			</if>
+			<if test="Salary != null">
+			 	and e.salary =#{Salary}
+			</if>
+			<if test="department != null">
+				and d.department = #{Department}
+			</if>
+			<if test="gender != null">
+				and e.gender = #{gender}
+			</if>
+			<if test="JoinDate != null">
+				and e.joinDate = #{JoinDate}
+			</if>
+			<if test="title != null">
+				and t.title = #{Title}
+			</if>
 		</where>
+	</sql>
+	
+	<sql id="updateSql">
+		update employee
+		<set>
+			<if test="Ename != null">ename= #{Ename},</if>
+			<if test="Salary != null">salary =#{Salary},</if>
+			<if test="department != null">dno = #{department.dcode},</if>
+			<if test="gender != null">gender = #{gender},</if>
+			<if test="JoinDate != null">joinDate = #{JoinDate},</if>
+			<if test="title != null">title = #{title.tcode}</if>
+		</set>
+		where eno = #{Eno}
 	</sql>
 	
 	<insert id="insertEmp" parameterType="Employee">
@@ -44,9 +72,16 @@
 		order by eno 
 	</select>
 	
-	<select id="selectEmpOne">
+	<select id="selectEmpOne" parameterType="hashmap" resultMap="EmpResult">
 		<include refid="selectSql"/>
 		<include refid="whereSql"/>
 	</select>
-	<!-- 업데이트 나중에 -->
+	
+	<update id="updateEmp" parameterType="Employee">
+		<include refid="updateSql"/>
+	</update>
+	
+	<delete id="deleteEmp" parameterType="Employee">
+		delete from employee where eno = #{Eno}
+	</delete>
 </mapper>
